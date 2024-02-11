@@ -8,10 +8,10 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email')
-        read_only_field = ('username',)
+        read_only_fields = ('username',)
 
     def create(self, validated_data):
-        return User.objects.create_user(request_data=validated_data)
+        return User.objects.create_user(**validated_data)
 
     def update(self, instance, validated_data):
         instance.username = validated_data.get('username', instance.username)
@@ -24,10 +24,10 @@ class UserSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id', 'title', 'category', 'quantity', 'price', 'rating', 'available']
+        fields = ['id', 'title', 'category', 'quantity', 'price', 'rating', 'in_stock']
 
     def create(self, validated_data):
-        return Product.objects.create_user(request_data=validated_data)
+        return Product.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
